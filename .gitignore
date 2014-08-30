@@ -1,0 +1,7 @@
+#Compiled sources
+*.class
+
+#folders
+bin
+target
+.settings
