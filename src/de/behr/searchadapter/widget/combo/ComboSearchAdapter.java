@@ -71,9 +71,9 @@ public class ComboSearchAdapter extends SearchAdapter {
 						Control focusControl = display.getFocusControl();
 						if (focusControl == null
 								|| focusControl != getSearchText()
-								|| focusControl != getTextfield()
+								&& focusControl != getTextfield()
 								&& focusControl.getParent() != getPopupShell()
-								|| !(focusControl instanceof org.eclipse.swt.widgets.List)) {
+								&& focusControl != getCompositeOfPopupShell()) {
 							// check popupShell is not disposed
 							if (!getPopupShell().isDisposed()) {
 								getPopupShell().setVisible(false);

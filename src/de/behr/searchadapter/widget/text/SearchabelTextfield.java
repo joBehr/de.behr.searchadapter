@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 import de.behr.searchadapter.search.ISearchSupport;
@@ -83,16 +82,20 @@ public class SearchabelTextfield extends SearchAdapter {
 							return;
 						}
 						Control focusControl = display.getFocusControl();
+
 						if (focusControl == null
 								|| focusControl != getSearchText()
-								|| focusControl != getTextfield()
+								&& focusControl != getTextfield()
 								&& focusControl.getParent() != getPopupShell()
-								|| !(focusControl != searchElementViewer
-										.getControl())
-								|| focusControl != getCompositeOfPopupShell()) {
-							System.err.println(focusControl instanceof Label);
+								&& focusControl != getCompositeOfPopupShell()
+								&& !(focusControl != searchElementViewer
+										.getList())) {
 							// check popupShell is not disposed
 							if (!getPopupShell().isDisposed()) {
+								System.err.println(System
+										.identityHashCode(focusControl) == System
+										.identityHashCode(searchElementViewer
+												.getList()));
 								getPopupShell().setVisible(false);
 							}
 						}
