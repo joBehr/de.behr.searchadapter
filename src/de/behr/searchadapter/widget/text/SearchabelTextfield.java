@@ -112,6 +112,7 @@ public class SearchabelTextfield extends SearchAdapter {
 										.getList())) {
 							// check popupShell is not disposed
 							if (!getPopupShell().isDisposed()) {
+								// debug System.err
 								System.err.println(System
 										.identityHashCode(focusControl) == System
 										.identityHashCode(searchElementViewer
