@@ -7,8 +7,11 @@
 package de.behr.searchadapter.widget.text;
 
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -32,7 +35,7 @@ public class SearchabelTextfield extends SearchAdapter {
 	public SearchabelTextfield(Composite parent, int style) {
 		super(parent, style, new DefaultSearchSupport());
 		searchElementViewer = new ListViewer(getCompositeOfPopupShell(),
-				SWT.BORDER);
+				SWT.BORDER | SWT.V_SCROLL);
 		GridData layoutData = new GridData(GridData.FILL_BOTH);
 		searchElementViewer.getControl().setLayoutData(layoutData);
 		getSearchText().addListener(SWT.KeyDown, new Listener() {
@@ -44,6 +47,23 @@ public class SearchabelTextfield extends SearchAdapter {
 				}
 			}
 		});
+		searchElementViewer
+				.addSelectionChangedListener(new ISelectionChangedListener() {
+
+					@Override
+					public void selectionChanged(SelectionChangedEvent event) {
+						IStructuredSelection selection = (IStructuredSelection) event
+								.getSelection();
+						if (!getTextfield().isDisposed()) {
+							if (!getPopupShell().isDisposed()) {
+								getTextfield().setText(
+										(String) selection.getFirstElement());
+								getPopupShell().setVisible(false);
+							}
+						}
+
+					}
+				});
 
 	}
 
